@@ -25,6 +25,9 @@
   },
   "homepage": "https://github.com/jasonsbarr/jsvm32#readme",
   "devDependencies": {
+    "eslint": "^8.13.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
     "jest": "^27.5.1",
     "prettier": "^2.6.2"
   }

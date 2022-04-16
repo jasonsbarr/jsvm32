@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/jasonsbarr/jsvm32/issues"
   },
-  "homepage": "https://github.com/jasonsbarr/jsvm32#readme"
+  "homepage": "https://github.com/jasonsbarr/jsvm32#readme",
+  "devDependencies": {
+    "prettier": "^2.6.2"
+  }
 }

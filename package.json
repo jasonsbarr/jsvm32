@@ -1,0 +1,25 @@
+{
+  "name": "jsvm32",
+  "version": "1.0.0",
+  "description": "A virtual machine built in JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jasonsbarr/jsvm32.git"
+  },
+  "keywords": [
+    "vm",
+    "cpu",
+    "low-level",
+    "bytecode"
+  ],
+  "author": "Jason Barr <jason@jasonsbarr.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jasonsbarr/jsvm32/issues"
+  },
+  "homepage": "https://github.com/jasonsbarr/jsvm32#readme"
+}

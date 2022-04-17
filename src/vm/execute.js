@@ -1,6 +1,6 @@
 import instructions from "../instructions.js";
 
-export default (instruction) => {
+export default (instruction, cpu) => {
   switch (instruction) {
     case instructions.MOV_LIT_REG.opcode:
     case instructions.MOV_REG_REG.opcode:

@@ -1,5 +1,6 @@
 import createMemory from "./memory.js";
 import registerNames, { floatRegisters } from "./registers.js";
+import execute from "./execute.js";
 
 const registerError = (name) => {
   throw new Error(`No such register: ${name}`);
@@ -206,5 +207,14 @@ export default class CPU {
     const double = this.memory.getFloat64(nextAddress);
     this.setRegisterUByte("ip", nextAddress + 8);
     return double;
+  }
+
+  execute(instruction) {
+    return execute(instruction);
+  }
+
+  step() {
+    const instruction = this.fetchUByte();
+    return this.execute(instruction);
   }
 }

@@ -1,17 +1,25 @@
 import createMemory from "./memory.js";
-import registerNames from "./registers.js";
+import registerNames, { floatRegisters } from "./registers.js";
 
 const registerError = (name) => {
   throw new Error(`No such register: ${name}`);
 };
 
 export default class CPU {
+  /**
+   * Construct a CPU object with the given memory
+   * @param {DataView} memory Memory for program and data
+   */
   constructor(memory) {
     this.memory = memory;
 
     // 64 bit registers so they can hold JS numbers and long ints
     this.registers = createMemory(registerNames.length * 8);
+    this.floatRegisters = createMemory(floatRegisters.length * 8);
     this.registerMap = registerNames.reduce((map, name, i) => {
+      map[name] = i * 8;
+    }, {});
+    this.floatRegisterMap = floatRegisters.reduce((map, name, i) => {
       map[name] = i * 8;
     }, {});
   }
@@ -48,7 +56,7 @@ export default class CPU {
     return this.registers.setUint32(this.registerMap[name] + offset, value);
   }
 
-  getRegisterUShort(name, offset = 0) {
+  getRegisterUWord(name, offset = 0) {
     if (!(name in this.registerMap)) {
       return registerError(name);
     }
@@ -56,7 +64,7 @@ export default class CPU {
     return this.registers.getUint16(this.registerMap[name], offset);
   }
 
-  setRegisterUShort(name, value, offset = 0) {
+  setRegisterUWord(name, value, offset = 0) {
     if (!(name in this.registerMap)) {
       return registerError(name);
     }
@@ -80,19 +88,77 @@ export default class CPU {
     return this.registers.setUint8(this.registerMap[name] + offset, value);
   }
 
-  getRegisterDouble(name) {
-    if (!(name in this.registerMap)) {
+  getRegisterFloat(name) {
+    if (!(name in this.floatRegisterMap)) {
       return registerError(name);
     }
 
-    return this.registers.getFloat64(this.registerMap[name]);
+    return this.floatRegisters.getFloat32(this.floatRegisterMap[name]);
+  }
+
+  setRegisterFloat(name, value) {
+    if (!(name in this.floatRegisterMap)) {
+      return registerError(name);
+    }
+
+    return this.floatRegisters.setFloat32(this.floatRegisterMap[name], value);
+  }
+
+  getRegisterDouble(name) {
+    if (!(name in this.floatRegisterMap)) {
+      return registerError(name);
+    }
+
+    return this.floatRegisters.getFloat64(this.floatRegisterMap[name]);
   }
 
   setRegisterDouble(name, value) {
-    if (!(name in this.registerMap)) {
+    if (!(name in this.floatRegisterMap)) {
       return registerError(name);
     }
 
-    return this.registers.setFloat64(this.registerMap[name], value);
+    return this.floatRegisters.setFloat64(this.floatRegisterMap[name], value);
+  }
+
+  fetchUByte() {
+    const nextAddress = this.getRegisterUByte("ip");
+    const byte = this.memory.getUint8(nextAddress);
+    this.setRegisterUByte("ip", nextAddress + 1);
+    return byte;
+  }
+
+  fetchUWord() {
+    const nextAddress = this.getRegisterUByte("ip");
+    const word = this.memory.getUint16(nextAddress);
+    this.setRegisterUByte("ip", nextAddress + 2);
+    return word;
+  }
+
+  fetchUInt() {
+    const nextAddress = this.getRegisterUByte("ip");
+    const int = this.memory.getUint32(nextAddress);
+    this.setRegisterUByte("ip", nextAddress + 4);
+    return int;
+  }
+
+  fetchULong() {
+    const nextAddress = this.getRegisterUByte("ip");
+    const long = this.memory.getUint8(nextAddress);
+    this.setRegisterULong("ip", nextAddress + 8);
+    return long;
+  }
+
+  fetchFloat() {
+    const nextAddress = this.getRegisterUByte("ip");
+    const float = this.memory.getFloat32(nextAddress);
+    this.setRegisterFloat("ip", nextAddress + 4);
+    return float;
+  }
+
+  fetchDouble() {
+    const nextAddress = this.getRegisterUByte("ip");
+    const double = this.memory.getFloat64(nextAddress);
+    this.setRegisterDouble("ip", nextAddress + 8);
+    return double;
   }
 }

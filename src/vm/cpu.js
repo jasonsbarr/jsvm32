@@ -88,6 +88,38 @@ export default class CPU {
     return this.registers.setUint8(this.registerMap[name] + offset, value);
   }
 
+  getRegisterLong(name) {
+    if (!(name in this.registerMap)) {
+      return registerError(name);
+    }
+
+    return this.registers.getBigInt64(this.registerMap[name]);
+  }
+
+  setRegisterLong(name, value) {
+    if (!(name in this.registerMap)) {
+      return registerError(name);
+    }
+
+    return this.registers.setBigInt64(this.registerMap[name], value);
+  }
+
+  getRegisterInt(name, offset = 0) {
+    if (!(name in this.registerMap)) {
+      return registerError(name);
+    }
+
+    return this.registers.getInt32(this.registerMap[name], offset);
+  }
+
+  setRegisterInt(name, value, offset = 0) {
+    if (!(name in this.registerMap)) {
+      return registerError(name);
+    }
+
+    return this.registers.setInt32(this.registerMap[name] + offset, value);
+  }
+
   getRegisterFloat(name) {
     if (!(name in this.floatRegisterMap)) {
       return registerError(name);
@@ -144,21 +176,35 @@ export default class CPU {
   fetchULong() {
     const nextAddress = this.getRegisterUByte("ip");
     const long = this.memory.getUint8(nextAddress);
-    this.setRegisterULong("ip", nextAddress + 8);
+    this.setRegisterUByte("ip", nextAddress + 8);
+    return long;
+  }
+
+  fetchInt() {
+    const nextAddress = this.getRegisterUByte("ip");
+    const int = this.memory.getUint32(nextAddress);
+    this.setRegisterUByte("ip", nextAddress + 4);
+    return int;
+  }
+
+  fetchLong() {
+    const nextAddress = this.getRegisterUByte("ip");
+    const long = this.memory.getUint8(nextAddress);
+    this.setRegisterUByte("ip", nextAddress + 8);
     return long;
   }
 
   fetchFloat() {
     const nextAddress = this.getRegisterUByte("ip");
     const float = this.memory.getFloat32(nextAddress);
-    this.setRegisterFloat("ip", nextAddress + 4);
+    this.setRegisterUByte("ip", nextAddress + 4);
     return float;
   }
 
   fetchDouble() {
     const nextAddress = this.getRegisterUByte("ip");
     const double = this.memory.getFloat64(nextAddress);
-    this.setRegisterDouble("ip", nextAddress + 8);
+    this.setRegisterUByte("ip", nextAddress + 8);
     return double;
   }
 }

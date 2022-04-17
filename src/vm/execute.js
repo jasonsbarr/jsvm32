@@ -1,5 +1,12 @@
 import instructions from "../instructions.js";
+// eslint-disable-next-line
+import CPU from "./cpu.js";
 
+/**
+ * Executes the instruction given to the CPU
+ * @param {Number} instruction
+ * @param {CPU} cpu
+ */
 export default (instruction, cpu) => {
   switch (instruction) {
     case instructions.MOV_LIT_REG.opcode:

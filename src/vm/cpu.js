@@ -1,5 +1,5 @@
 import createMemory from "./memory.js";
-import registerNames, { floatRegisters } from "./registers.js";
+import registerNames from "./registers.js";
 import execute from "./execute.js";
 
 const registerError = (name) => {
@@ -16,12 +16,7 @@ export default class CPU {
 
     // 64 bit registers so they can hold JS numbers and long ints
     this.registers = createMemory(registerNames.length * 8);
-    this.floatRegisters = createMemory(floatRegisters.length * 8);
     this.registerMap = registerNames.reduce((map, name, i) => {
-      map[name] = i * 8;
-      return map;
-    }, {});
-    this.floatRegisterMap = floatRegisters.reduce((map, name, i) => {
       map[name] = i * 8;
       return map;
     }, {});
@@ -124,35 +119,35 @@ export default class CPU {
   }
 
   getRegisterFloat(name) {
-    if (!(name in this.floatRegisterMap)) {
+    if (!(name in this.registerMap)) {
       return registerError(name);
     }
 
-    return this.floatRegisters.getFloat32(this.floatRegisterMap[name]);
+    return this.registers.getFloat32(this.registerMap[name]);
   }
 
   setRegisterFloat(name, value) {
-    if (!(name in this.floatRegisterMap)) {
+    if (!(name in this.registerMap)) {
       return registerError(name);
     }
 
-    return this.floatRegisters.setFloat32(this.floatRegisterMap[name], value);
+    return this.registers.setFloat32(this.registerMap[name], value);
   }
 
   getRegisterDouble(name) {
-    if (!(name in this.floatRegisterMap)) {
+    if (!(name in this.registerMap)) {
       return registerError(name);
     }
 
-    return this.floatRegisters.getFloat64(this.floatRegisterMap[name]);
+    return this.registers.getFloat64(this.registerMap[name]);
   }
 
   setRegisterDouble(name, value) {
-    if (!(name in this.floatRegisterMap)) {
+    if (!(name in this.registerMap)) {
       return registerError(name);
     }
 
-    return this.floatRegisters.setFloat64(this.floatRegisterMap[name], value);
+    return this.registers.setFloat64(this.registerMap[name], value);
   }
 
   fetchUByte() {

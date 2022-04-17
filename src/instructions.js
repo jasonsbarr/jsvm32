@@ -1,4 +1,6 @@
-export default [
+import { indexBy } from "./utils.js";
+
+const metadata = [
   {
     instruction: "MOV_LIT_REG",
     opcode: 0x10,
@@ -30,3 +32,5 @@ export default [
     name: "jne",
   },
 ];
+
+export default indexBy(metadata, "instructions");

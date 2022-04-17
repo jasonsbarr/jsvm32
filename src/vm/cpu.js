@@ -19,9 +19,11 @@ export default class CPU {
     this.floatRegisters = createMemory(floatRegisters.length * 8);
     this.registerMap = registerNames.reduce((map, name, i) => {
       map[name] = i * 8;
+      return map;
     }, {});
     this.floatRegisterMap = floatRegisters.reduce((map, name, i) => {
       map[name] = i * 8;
+      return map;
     }, {});
   }
 
@@ -210,7 +212,7 @@ export default class CPU {
   }
 
   execute(instruction) {
-    return execute(instruction);
+    return execute(instruction, this);
   }
 
   step() {

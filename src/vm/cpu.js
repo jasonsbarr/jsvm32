@@ -22,6 +22,19 @@ export default class CPU {
     }, {});
   }
 
+  debug() {
+    registerNames.forEach((name) => {
+      process.stdout.write(`${name}: 0x`);
+      for (let i = 0; i < 8; i += 1) {
+        process.stdout.write(
+          `${this.getRegisterUByte(name, i).toString(16).padStart(2, "0")}`
+        );
+      }
+      process.stdout.write("\n");
+    });
+    console.log();
+  }
+
   getRegisterULong(name) {
     if (!(name in this.registerMap)) {
       return registerError(name);

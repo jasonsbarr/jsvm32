@@ -33,4 +33,4 @@ const metadata = [
   },
 ];
 
-export default indexBy(metadata, "instructions");
+export default indexBy(metadata, "instruction");

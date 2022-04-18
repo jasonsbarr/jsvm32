@@ -1,0 +1,25 @@
+import memory from "./src/vm/memory.js";
+import CPU from "./src/vm/cpu.js";
+import instructions from "./src/instructions.js";
+import types from "./src/vm/types.js";
+
+const mem = memory(256);
+const cpu = new CPU(mem);
+let bytes = new Uint8Array(mem.buffer);
+
+// const IP = 0;
+// const ACC = 1;
+const R1 = 2;
+const R2 = 3;
+
+let i = 0;
+cpu.debug();
+
+bytes[i++] = instructions.MOV_LIT_REG.opcode;
+bytes[i++] = types.uword.code;
+bytes[i++] = 0x12;
+bytes[i++] = 0x34;
+bytes[i++] = R1;
+
+cpu.step();
+cpu.debug();

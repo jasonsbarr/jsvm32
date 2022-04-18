@@ -125,6 +125,8 @@ export default (instruction, cpu) => {
       const regFrom = registers[cpu.fetchUByte() % registers.length];
       const regTo = registers[cpu.fetchUByte() % registers.length];
       const value = getOnType(type, regFrom, cpu);
+      // first, zero out the value in the register we're moving to
+      cpu.setRegisterULong(regTo, 0n);
       setOnType(type, regTo, value, cpu);
       return;
     }

@@ -34,7 +34,7 @@ const fetchOnType = (type, cpu) => {
     case types.double.code:
       return cpu.fetchDouble();
     default:
-      throw new Error(`Unknown type ${type.toString(16).padStart(2, "0")}`);
+      throw new Error(`Unknown type 0x${type.toString(16).padStart(2, "0")}`);
   }
 };
 
@@ -68,7 +68,41 @@ const setOnType = (type, register, value, cpu) => {
     case types.double.code:
       return cpu.setRegisterDouble(register, value);
     default:
-      throw new Error(`Unknown type ${type.toString(16).padStart(2, "0")}`);
+      throw new Error(`Unknown type ox${type.toString(16).padStart(2, "0")}`);
+  }
+};
+
+/**
+ *
+ * @param {Number} type
+ * @param {String} register
+ * @param {CPU} cpu
+ * @returns {Number}
+ */
+const getOnType = (type, register, cpu) => {
+  switch (type) {
+    case types.ubyte.code:
+      return cpu.getRegisterUByte(register);
+    case types.uword.code:
+      return cpu.getRegisterUWord(register);
+    case types.uint.code:
+      return cpu.getRegisterUInt(register);
+    case types.ulong.code:
+      return cpu.getRegisterULong(register);
+    case types.byte.code:
+      throw new Error("Getting byte from register not defined");
+    case types.word.code:
+      throw new Error("Getting word from register not defined");
+    case types.int.code:
+      return cpu.getRegisterInt(register);
+    case types.long.code:
+      return cpu.getRegisterLong(register);
+    case types.float.code:
+      return cpu.getRegisterFloat(register);
+    case types.double.code:
+      return cpu.getRegisterDouble(register);
+    default:
+      throw new Error(`Unknown type 0x${type.toString(16).padStart(2, "0")}`);
   }
 };
 
@@ -86,7 +120,14 @@ export default (instruction, cpu) => {
       setOnType(type, register, literal, cpu);
       return;
     }
-    case instructions.MOV_REG_REG.opcode:
+    case instructions.MOV_REG_REG.opcode: {
+      const type = cpu.fetchUByte();
+      const regFrom = registers[cpu.fetchUByte() % registers.length];
+      const regTo = registers[cpu.fetchUByte() % registers.length];
+      const value = getOnType(type, regFrom, cpu);
+      setOnType(type, regTo, value, cpu);
+      return;
+    }
     case instructions.MOV_REG_MEM.opcode:
     case instructions.MOV_MEM_REG.opcode:
     case instructions.ADD_REG_REG.opcode:

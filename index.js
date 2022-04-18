@@ -23,3 +23,11 @@ bytes[i++] = R1;
 
 cpu.step();
 cpu.debug();
+
+bytes[i++] = instructions.MOV_REG_REG.opcode;
+bytes[i++] = types.uword.code;
+bytes[i++] = R1;
+bytes[i++] = R2;
+
+cpu.step();
+cpu.debug();

@@ -30,4 +30,39 @@ describe("Initializing a CPU object", () => {
     cpu.setRegisterUInt("r2", 100, 4);
     expect(cpu.getRegisterUInt("r2", 4)).toEqual(100);
   });
+
+  it("Stores a UInt16 in a register and retrieves it", () => {
+    cpu.setRegisterUWord("r3", 1024);
+    expect(cpu.getRegisterUWord("r3")).toEqual(1024);
+  });
+
+  it("Stores a UInt16 in a register at an offset and retrieves it", () => {
+    cpu.setRegisterUWord("r3", 256, 2);
+    expect(cpu.getRegisterUWord("r3", 2)).toEqual(256);
+  });
+
+  it("Stores a UInt8 in a register and retrieves it", () => {
+    cpu.setRegisterUByte("r4", 156);
+    expect(cpu.getRegisterUByte("r4")).toEqual(156);
+  });
+
+  it("Stores a UInt8 in a register at an offset and retrieves it", () => {
+    cpu.setRegisterUByte("r4", 200, 1);
+    expect(cpu.getRegisterUByte("r4", 1)).toEqual(200);
+  });
+
+  it("Stores an Int64 in a register and retrieves it", () => {
+    cpu.setRegisterLong("r5", -56n);
+    expect(cpu.getRegisterLong("r5")).toEqual(-56n);
+  });
+
+  it("Stores an Int32 in a register and retrieves it", () => {
+    cpu.setRegisterInt("r6", -256);
+    expect(cpu.getRegisterInt("r6")).toEqual(-256);
+  });
+
+  it("Stores an Int32 in a register at an offset and retrieves it", () => {
+    cpu.setRegisterInt("r6", -100, 4);
+    expect(cpu.getRegisterInt("r6", 4)).toEqual(-100);
+  });
 });

@@ -65,4 +65,19 @@ describe("Initializing a CPU object", () => {
     cpu.setRegisterInt("r6", -100, 4);
     expect(cpu.getRegisterInt("r6", 4)).toEqual(-100);
   });
+
+  it("Stores a Float32 in a register and retrieves it", () => {
+    cpu.setRegisterFloat("r7", 3.1415);
+    expect(cpu.getRegisterFloat("r7")).toBeCloseTo(3.1415);
+  });
+
+  it("Stores a Float32 in a register at an offset and retrieves it", () => {
+    cpu.setRegisterFloat("r7", -6.182, 4);
+    expect(cpu.getRegisterFloat("r7", 4)).toBeCloseTo(-6.182);
+  });
+
+  it("Stores a Float64 in a register and retrieves it", () => {
+    cpu.setRegisterFloat("r8", 102.17e-17);
+    expect(cpu.getRegisterFloat("r8")).toBeCloseTo(102.17e-17);
+  });
 });

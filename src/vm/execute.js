@@ -17,6 +17,6 @@ export default (instruction, cpu) => {
     case instructions.ADD_REG_REG.opcode:
     case instructions.JMP_NOT_EQ.opcode:
     default:
-      throw new Error(`${instruction.instruction} not found`);
+      throw new Error(`${instruction} not found`);
   }
 };

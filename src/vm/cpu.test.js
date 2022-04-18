@@ -14,6 +14,20 @@ describe("Initializing a CPU object", () => {
 
   it("Initializes registers", () => {
     expect(cpu.registers instanceof DataView).toBe(true);
-    expect(cpu.floatRegisters instanceof DataView).toBe(true);
+  });
+
+  it("Stores a UInt64 in a register and retrieves it", () => {
+    cpu.setRegisterULong("r1", 10n);
+    expect(cpu.getRegisterULong("r1")).toEqual(10n);
+  });
+
+  it("Stores a UInt32 in a register and retrieves it", () => {
+    cpu.setRegisterUInt("r2", 256);
+    expect(cpu.getRegisterUInt("r2")).toEqual(256);
+  });
+
+  it("Stores a UInt32 in a register at an offset and retrieves it", () => {
+    cpu.setRegisterUInt("r2", 100, 4);
+    expect(cpu.getRegisterUInt("r2", 4)).toEqual(100);
   });
 });

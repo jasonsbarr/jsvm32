@@ -186,21 +186,35 @@ export default class CPU {
 
   fetchULong() {
     const nextAddress = this.getRegisterUByte("ip");
-    const long = this.memory.getUint8(nextAddress);
+    const long = this.memory.getBigUint64(nextAddress);
     this.setRegisterUByte("ip", nextAddress + 8);
     return long;
   }
 
+  fetchByte() {
+    const nextAddress = this.getRegisterUByte("ip");
+    const byte = this.memory.getInt8(nextAddress);
+    this.setRegisterUByte("ip", nextAddress + 1);
+    return byte;
+  }
+
+  fetchWord() {
+    const nextAddress = this.getRegisterUByte("ip");
+    const word = this.memory.getInt16(nextAddress);
+    this.setRegisterUByte("ip", nextAddress + 2);
+    return word;
+  }
+
   fetchInt() {
     const nextAddress = this.getRegisterUByte("ip");
-    const int = this.memory.getUint32(nextAddress);
+    const int = this.memory.getInt32(nextAddress);
     this.setRegisterUByte("ip", nextAddress + 4);
     return int;
   }
 
   fetchLong() {
     const nextAddress = this.getRegisterUByte("ip");
-    const long = this.memory.getUint8(nextAddress);
+    const long = this.memory.getBigInt64(nextAddress);
     this.setRegisterUByte("ip", nextAddress + 8);
     return long;
   }

@@ -59,7 +59,7 @@ export default class CPU {
       return registerError(name);
     }
 
-    return this.registers.getUint16(this.registerMap[name], offset);
+    return this.registers.getUint16(this.registerMap[name] + offset);
   }
 
   setRegisterUWord(name, value, offset = 0) {
@@ -75,7 +75,7 @@ export default class CPU {
       return registerError(name);
     }
 
-    return this.registers.getUint8(this.registerMap[name], offset);
+    return this.registers.getUint8(this.registerMap[name] + offset);
   }
 
   setRegisterUByte(name, value, offset = 0) {
@@ -107,7 +107,7 @@ export default class CPU {
       return registerError(name);
     }
 
-    return this.registers.getInt32(this.registerMap[name], offset);
+    return this.registers.getInt32(this.registerMap[name] + offset);
   }
 
   setRegisterInt(name, value, offset = 0) {
@@ -118,12 +118,12 @@ export default class CPU {
     return this.registers.setInt32(this.registerMap[name] + offset, value);
   }
 
-  getRegisterFloat(name) {
+  getRegisterFloat(name, offset = 0) {
     if (!(name in this.registerMap)) {
       return registerError(name);
     }
 
-    return this.registers.getFloat32(this.registerMap[name]);
+    return this.registers.getFloat32(this.registerMap[name] + offset);
   }
 
   setRegisterFloat(name, value, offset = 0) {

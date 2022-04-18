@@ -43,7 +43,7 @@ export default class CPU {
       return registerError(name);
     }
 
-    return this.registers.getUint32(this.registerMap[name], offset);
+    return this.registers.getUint32(this.registerMap[name] + offset);
   }
 
   setRegisterUInt(name, value, offset = 0) {

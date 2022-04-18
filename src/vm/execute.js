@@ -117,6 +117,7 @@ export default (instruction, cpu) => {
       const type = cpu.fetchUByte();
       const literal = fetchOnType(type, cpu);
       const register = registers[cpu.fetchUByte() % registers.length];
+      cpu.setRegisterULong(register, 0n);
       setOnType(type, register, literal, cpu);
       return;
     }

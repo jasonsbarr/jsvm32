@@ -126,12 +126,12 @@ export default class CPU {
     return this.registers.getFloat32(this.registerMap[name]);
   }
 
-  setRegisterFloat(name, value) {
+  setRegisterFloat(name, value, offset = 0) {
     if (!(name in this.registerMap)) {
       return registerError(name);
     }
 
-    return this.registers.setFloat32(this.registerMap[name], value);
+    return this.registers.setFloat32(this.registerMap[name] + offset, value);
   }
 
   getRegisterDouble(name) {

@@ -107,6 +107,15 @@ const getOnType = (type, register, cpu) => {
 };
 
 /**
+ * Sets a register's bytes to all zeroes
+ * @param {String} register
+ * @param {CPU} cpu
+ */
+const zeroRegister = (register, cpu) => {
+  cpu.setRegisterULong(register, 0n);
+};
+
+/**
  * Executes the instruction given to the CPU
  * @param {Number} instruction
  * @param {CPU} cpu
@@ -117,7 +126,7 @@ export default (instruction, cpu) => {
       const type = cpu.fetchUByte();
       const literal = fetchOnType(type, cpu);
       const register = registers[cpu.fetchUByte() % registers.length];
-      cpu.setRegisterULong(register, 0n);
+      zeroRegister();
       setOnType(type, register, literal, cpu);
       return;
     }
@@ -127,7 +136,7 @@ export default (instruction, cpu) => {
       const regTo = registers[cpu.fetchUByte() % registers.length];
       const value = getOnType(type, regFrom, cpu);
       // first, zero out the value in the register we're moving to
-      cpu.setRegisterULong(regTo, 0n);
+      zeroRegister();
       setOnType(type, regTo, value, cpu);
       return;
     }

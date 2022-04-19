@@ -150,6 +150,39 @@ const setMemOnType = (type, address, value, cpu) => {
 };
 
 /**
+ * Get value from a memory address based on the value's type
+ * @param {Number} type
+ * @param {Number} address
+ * @param {CPU} cpu
+ */
+const getMemOnType = (type, address, cpu) => {
+  switch (type) {
+    case types.ubyte.code:
+      return cpu.memory.getUint8(address);
+    case types.uword.code:
+      return cpu.memory.getUint16(address);
+    case types.uint.code:
+      return cpu.memory.getUint32(address);
+    case types.ulong.code:
+      return cpu.memory.getBigUint64(address);
+    case types.byte.code:
+      throw new Error("Getting byte from register not defined");
+    case types.word.code:
+      throw new Error("Getting word from register not defined");
+    case types.int.code:
+      return cpu.memory.getInt32(address);
+    case types.long.code:
+      return cpu.memory.getBigInt64(address);
+    case types.float.code:
+      return cpu.memory.getFloat32(address);
+    case types.double.code:
+      return cpu.memory.getFloat64(address);
+    default:
+      throw new Error(`Unknown type 0x${type.toString(16).padStart(2, "0")}`);
+  }
+};
+
+/**
  * Executes the instruction given to the CPU
  * @param {Number} instruction
  * @param {CPU} cpu
@@ -185,7 +218,16 @@ export default (instruction, cpu) => {
       return;
     }
 
-    case instructions.MOV_MEM_REG.opcode:
+    case instructions.MOV_MEM_REG.opcode: {
+      const type = cpu.fetchUByte();
+      const address = cpu.fetchUInt();
+      const regTo = registers[cpu.fetchUByte() % registers.length];
+      const value = getMemOnType(type, address, cpu);
+      zeroRegister(regTo, cpu);
+      setOnType(type, regTo, value, cpu);
+      return;
+    }
+
     case instructions.ADD_REG_REG.opcode: {
       const type = cpu.fetchUByte();
       const r1 = registers[cpu.fetchUByte() % registers.length];

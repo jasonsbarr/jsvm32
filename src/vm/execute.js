@@ -183,6 +183,38 @@ const getMemOnType = (type, address, cpu) => {
 };
 
 /**
+ * Fetches the next value from the instruction stream based on type
+ * @param {Number} type
+ * @param {CPU} cpu
+ */
+const fetchOnType = (type, cpu) => {
+  switch (type) {
+    case types.ubyte.code:
+      return cpu.fetchUByte();
+    case types.uword.code:
+      return cpu.fetchUWord();
+    case types.uint.code:
+      return cpu.fetchUInt();
+    case types.ulong.code:
+      return cpu.fetchULong();
+    case types.byte.code:
+      return cpu.fetchByte();
+    case types.word.code:
+      return cpu.fetchWord();
+    case types.int.code:
+      return cpu.fetchInt();
+    case types.long.code:
+      return cpu.fetchLong();
+    case types.float.code:
+      return cpu.fetchFloat();
+    case types.double.code:
+      return cpu.fetchDouble();
+    default:
+      throw new Error(`Unknown type 0x${type.toString(16).padStart(2, "0")}`);
+  }
+};
+
+/**
  * Executes the instruction given to the CPU
  * @param {Number} instruction
  * @param {CPU} cpu
@@ -239,7 +271,18 @@ export default (instruction, cpu) => {
       return;
     }
 
-    case instructions.JMP_NOT_EQ.opcode:
+    case instructions.JMP_NOT_EQ.opcode: {
+      const type = cpu.fetchUByte();
+      const value = fetchOnType(type, cpu);
+      const address = cpu.fetchUInt();
+
+      if (value !== getOnType(type, "acc", cpu)) {
+        cpu.setRegisterInt("ip", address);
+      }
+
+      return;
+    }
+
     default:
       throw new Error(
         `Instruction ${instruction.toString(16).padStart(2, "0")} not found`

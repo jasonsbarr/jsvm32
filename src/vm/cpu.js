@@ -174,72 +174,72 @@ export default class CPU {
   }
 
   fetchUByte() {
-    const nextAddress = this.getRegisterUByte("ip");
+    const nextAddress = this.getRegisterUInt("ip");
     const byte = this.memory.getUint8(nextAddress);
-    this.setRegisterUByte("ip", nextAddress + 1);
+    this.setRegisterUInt("ip", nextAddress + 1);
     return byte;
   }
 
   fetchUWord() {
-    const nextAddress = this.getRegisterUByte("ip");
+    const nextAddress = this.getRegisterUInt("ip");
     const word = this.memory.getUint16(nextAddress);
-    this.setRegisterUByte("ip", nextAddress + 2);
+    this.setRegisterUInt("ip", nextAddress + 2);
     return word;
   }
 
   fetchUInt() {
-    const nextAddress = this.getRegisterUByte("ip");
+    const nextAddress = this.getRegisterUInt("ip");
     const int = this.memory.getUint32(nextAddress);
-    this.setRegisterUByte("ip", nextAddress + 4);
+    this.setRegisterUInt("ip", nextAddress + 4);
     return int;
   }
 
   fetchULong() {
-    const nextAddress = this.getRegisterUByte("ip");
+    const nextAddress = this.getRegisterUInt("ip");
     const long = this.memory.getBigUint64(nextAddress);
-    this.setRegisterUByte("ip", nextAddress + 8);
+    this.setRegisterUInt("ip", nextAddress + 8);
     return long;
   }
 
   fetchByte() {
-    const nextAddress = this.getRegisterUByte("ip");
+    const nextAddress = this.getRegisterUInt("ip");
     const byte = this.memory.getInt8(nextAddress);
-    this.setRegisterUByte("ip", nextAddress + 1);
+    this.setRegisterUInt("ip", nextAddress + 1);
     return byte;
   }
 
   fetchWord() {
-    const nextAddress = this.getRegisterUByte("ip");
+    const nextAddress = this.getRegisterUInt("ip");
     const word = this.memory.getInt16(nextAddress);
-    this.setRegisterUByte("ip", nextAddress + 2);
+    this.setRegisterUInt("ip", nextAddress + 2);
     return word;
   }
 
   fetchInt() {
-    const nextAddress = this.getRegisterUByte("ip");
+    const nextAddress = this.getRegisterUInt("ip");
     const int = this.memory.getInt32(nextAddress);
-    this.setRegisterUByte("ip", nextAddress + 4);
+    this.setRegisterUInt("ip", nextAddress + 4);
     return int;
   }
 
   fetchLong() {
-    const nextAddress = this.getRegisterUByte("ip");
+    const nextAddress = this.getRegisterUInt("ip");
     const long = this.memory.getBigInt64(nextAddress);
-    this.setRegisterUByte("ip", nextAddress + 8);
+    this.setRegisterUInt("ip", nextAddress + 8);
     return long;
   }
 
   fetchFloat() {
-    const nextAddress = this.getRegisterUByte("ip");
+    const nextAddress = this.getRegisterUInt("ip");
     const float = this.memory.getFloat32(nextAddress);
-    this.setRegisterUByte("ip", nextAddress + 4);
+    this.setRegisterUInt("ip", nextAddress + 4);
     return float;
   }
 
   fetchDouble() {
-    const nextAddress = this.getRegisterUByte("ip");
+    const nextAddress = this.getRegisterUInt("ip");
     const double = this.memory.getFloat64(nextAddress);
-    this.setRegisterUByte("ip", nextAddress + 8);
+    this.setRegisterUInt("ip", nextAddress + 8);
     return double;
   }
 

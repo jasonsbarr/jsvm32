@@ -63,3 +63,15 @@ bytes[i++] = R3;
 
 cpu.step();
 cpu.debug();
+
+bytes[i++] = instructions.JMP_NOT_EQ.opcode;
+bytes[i++] = types.uword.code;
+bytes[i++] = 0x12;
+bytes[i++] = 0x34;
+bytes[i++] = 0x00;
+bytes[i++] = 0x00;
+bytes[i++] = 0x00;
+bytes[i++] = 0x01;
+
+cpu.step();
+cpu.debug();

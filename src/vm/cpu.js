@@ -35,6 +35,16 @@ export default class CPU {
     console.log();
   }
 
+  viewMemoryAt(address) {
+    const next8Bytes = Array.from({ length: 8 }, (_, i) =>
+      this.memory.getUint8(address + i)
+    ).map((v) => `0x${v.toString(16).padStart(2, "0")}`);
+
+    console.log(
+      `0x${address.toString(16).padStart(4, "0")}: ${next8Bytes.join(" ")}`
+    );
+  }
+
   getRegisterULong(name) {
     if (!(name in this.registerMap)) {
       return registerError(name);

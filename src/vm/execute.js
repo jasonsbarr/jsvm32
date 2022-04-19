@@ -126,7 +126,7 @@ export default (instruction, cpu) => {
       const type = cpu.fetchUByte();
       const literal = fetchOnType(type, cpu);
       const register = registers[cpu.fetchUByte() % registers.length];
-      zeroRegister();
+      zeroRegister(register, cpu);
       setOnType(type, register, literal, cpu);
       return;
     }
@@ -136,13 +136,22 @@ export default (instruction, cpu) => {
       const regTo = registers[cpu.fetchUByte() % registers.length];
       const value = getOnType(type, regFrom, cpu);
       // first, zero out the value in the register we're moving to
-      zeroRegister();
+      zeroRegister(regTo, cpu);
       setOnType(type, regTo, value, cpu);
       return;
     }
     case instructions.MOV_REG_MEM.opcode:
     case instructions.MOV_MEM_REG.opcode:
-    case instructions.ADD_REG_REG.opcode:
+    case instructions.ADD_REG_REG.opcode: {
+      const type = cpu.fetchUByte();
+      const r1 = registers[cpu.fetchUByte() % registers.length];
+      const r2 = registers[cpu.fetchUByte() % registers.length];
+      const r1Value = getOnType(type, r1, cpu);
+      const r2Value = getOnType(type, r2, cpu);
+      zeroRegister("acc", cpu);
+      setOnType(type, "acc", r1Value + r2Value, cpu);
+      return;
+    }
     case instructions.JMP_NOT_EQ.opcode:
     default:
       throw new Error(

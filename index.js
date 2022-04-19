@@ -31,3 +31,11 @@ bytes[i++] = R2;
 
 cpu.step();
 cpu.debug();
+
+bytes[i++] = instructions.ADD_REG_REG.opcode;
+bytes[i++] = types.uword.code;
+bytes[i++] = R1;
+bytes[i++] = R2;
+
+cpu.step();
+cpu.debug();

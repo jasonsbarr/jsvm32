@@ -130,6 +130,7 @@ export default (instruction, cpu) => {
       setOnType(type, register, literal, cpu);
       return;
     }
+
     case instructions.MOV_REG_REG.opcode: {
       const type = cpu.fetchUByte();
       const regFrom = registers[cpu.fetchUByte() % registers.length];
@@ -140,6 +141,7 @@ export default (instruction, cpu) => {
       setOnType(type, regTo, value, cpu);
       return;
     }
+
     case instructions.MOV_REG_MEM.opcode:
     case instructions.MOV_MEM_REG.opcode:
     case instructions.ADD_REG_REG.opcode: {
@@ -152,6 +154,7 @@ export default (instruction, cpu) => {
       setOnType(type, "acc", r1Value + r2Value, cpu);
       return;
     }
+
     case instructions.JMP_NOT_EQ.opcode:
     default:
       throw new Error(

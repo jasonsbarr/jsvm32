@@ -8,7 +8,7 @@ const cpu = new CPU(mem);
 let bytes = new Uint8Array(mem.buffer);
 
 // const IP = 0;
-// const ACC = 1;
+const ACC = 1;
 const R1 = 2;
 const R2 = 3;
 
@@ -38,4 +38,16 @@ bytes[i++] = R1;
 bytes[i++] = R2;
 
 cpu.step();
+cpu.debug();
+
+bytes[i++] = instructions.MOV_REG_MEM.opcode;
+bytes[i++] = types.uword.code;
+bytes[i++] = ACC;
+bytes[i++] = 0x00;
+bytes[i++] = 0x00;
+bytes[i++] = 0x00;
+bytes[i++] = 0x64;
+
+cpu.step();
+cpu.viewMemoryAt(100);
 cpu.debug();

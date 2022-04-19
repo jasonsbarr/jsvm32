@@ -11,6 +11,7 @@ let bytes = new Uint8Array(mem.buffer);
 const ACC = 1;
 const R1 = 2;
 const R2 = 3;
+const R3 = 4;
 
 let i = 0;
 cpu.debug();
@@ -50,4 +51,15 @@ bytes[i++] = 0x64;
 
 cpu.step();
 cpu.viewMemoryAt(100);
+cpu.debug();
+
+bytes[i++] = instructions.MOV_MEM_REG.opcode;
+bytes[i++] = types.uword.code;
+bytes[i++] = 0x00;
+bytes[i++] = 0x00;
+bytes[i++] = 0x00;
+bytes[i++] = 0x64;
+bytes[i++] = R3;
+
+cpu.step();
 cpu.debug();

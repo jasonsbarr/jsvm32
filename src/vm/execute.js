@@ -56,9 +56,9 @@ const setOnType = (type, register, value, cpu) => {
     case types.ulong.code:
       return cpu.setRegisterULong(register, value);
     case types.byte.code:
-      throw new Error("Setting byte in register not defined");
+      return cpu.setRegisterByte(register, value);
     case types.word.code:
-      throw new Error("Setting word in register not defined");
+      return cpu.setRegisterWord(register, value);
     case types.int.code:
       return cpu.setRegisterInt(register, value);
     case types.long.code:
@@ -90,9 +90,9 @@ const getOnType = (type, register, cpu) => {
     case types.ulong.code:
       return cpu.getRegisterULong(register);
     case types.byte.code:
-      throw new Error("Getting byte from register not defined");
+      return cpu.getRegisterByte(register);
     case types.word.code:
-      throw new Error("Getting word from register not defined");
+      return cpu.getRegisterWord(register);
     case types.int.code:
       return cpu.getRegisterInt(register);
     case types.long.code:
@@ -133,9 +133,9 @@ const setMemOnType = (type, address, value, cpu) => {
     case types.ulong.code:
       return cpu.memory.setBigUint64(address, value);
     case types.byte.code:
-      throw new Error("Getting byte from register not defined");
+      return cpu.memory.setInt8(address, value);
     case types.word.code:
-      throw new Error("Getting word from register not defined");
+      return cpu.memory.setInt16(address, value);
     case types.int.code:
       return cpu.memory.setInt32(address, value);
     case types.long.code:
@@ -166,9 +166,9 @@ const getMemOnType = (type, address, cpu) => {
     case types.ulong.code:
       return cpu.memory.getBigUint64(address);
     case types.byte.code:
-      throw new Error("Getting byte from register not defined");
+      return cpu.memory.getInt8(address);
     case types.word.code:
-      throw new Error("Getting word from register not defined");
+      return cpu.memory.getInt16(address);
     case types.int.code:
       return cpu.memory.getInt32(address);
     case types.long.code:

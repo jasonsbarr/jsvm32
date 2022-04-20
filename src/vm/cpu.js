@@ -141,6 +141,38 @@ export default class CPU {
     return this.registers.setInt32(this.registerMap[name] + offset, value);
   }
 
+  getRegisterWord(name, offset = 0) {
+    if (!(name in this.registerMap)) {
+      return registerError(name);
+    }
+
+    return this.registers.getInt16(this.registerMap[name] + offset);
+  }
+
+  setRegisterWord(name, value, offset = 0) {
+    if (!(name in this.registerMap)) {
+      return registerError(name);
+    }
+
+    return this.registers.setInt16(this.registerMap[name] + offset, value);
+  }
+
+  getRegisterByte(name, offset = 0) {
+    if (!(name in this.registerMap)) {
+      return registerError(name);
+    }
+
+    return this.registers.getInt8(this.registerMap[name] + offset);
+  }
+
+  setRegisterByte(name, value, offset = 0) {
+    if (!(name in this.registerMap)) {
+      return registerError(name);
+    }
+
+    return this.registers.setInt8(this.registerMap[name] + offset, value);
+  }
+
   getRegisterFloat(name, offset = 0) {
     if (!(name in this.registerMap)) {
       return registerError(name);

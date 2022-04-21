@@ -433,7 +433,7 @@ export default class CPU {
     this.push(types.ulong.code, this.getRegisterULong("r7"));
     this.push(types.ulong.code, this.getRegisterULong("r8"));
     this.push(types.ulong.code, this.getRegisterULong("ip"));
-    this.push(types.uint.code, this.stackFrameSize + 8);
+    this.push(types.uint.code, this.stackFrameSize + 4);
 
     this.setRegisterUInt("fp", this.getRegisterUInt("sp"));
     this.setRegisterUInt("bp", bp);
@@ -476,5 +476,12 @@ export default class CPU {
   step() {
     const instruction = this.fetchUByte();
     return this.execute(instruction);
+  }
+
+  run() {
+    const halt = this.step();
+    if (!halt) {
+      setImmediate(() => this.run());
+    }
   }
 }

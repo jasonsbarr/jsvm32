@@ -188,6 +188,9 @@ const getMemOnType = (type, address, cpu) => {
  */
 export default (instruction, cpu) => {
   switch (instruction) {
+    case instructions.HLT.opcode:
+      return true;
+
     case instructions.MOV_LIT_REG.opcode: {
       const type = cpu.fetchUByte();
       const literal = fetchOnType(type, cpu);

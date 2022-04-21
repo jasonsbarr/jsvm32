@@ -288,25 +288,21 @@ export default class CPU {
       case types.ubyte.code:
         this.memory.setUint8(address, value);
         this.setRegisterUInt("sp", address - 1);
-        this.setRegisterUInt("bp", address - 1);
         this.stackFrameSize += 1;
         return;
       case types.uword.code:
         this.memory.setUint16(address, value);
         this.setRegisterUInt("sp", address - 2);
-        this.setRegisterUInt("bp", address - 2);
         this.stackFrameSize += 2;
         return;
       case types.uint.code:
         this.memory.setUint32(address, value);
         this.setRegisterUInt("sp", address - 4);
-        this.setRegisterUInt("bp", address - 4);
         this.stackFrameSize += 4;
         return;
       case types.ulong.code:
         this.memory.setBigUint64(address, value);
         this.setRegisterUInt("sp", address - 8);
-        this.setRegisterUInt("bp", address - 8);
         this.stackFrameSize += 8;
         return;
       case types.byte.code:
@@ -324,7 +320,6 @@ export default class CPU {
       case types.int.code:
         this.memory.setInt32(address, value);
         this.setRegisterUInt("sp", address - 4);
-        this.setRegisterUInt("bp", address - 4);
         this.stackFrameSize += 4;
         return;
       case types.long.code:
@@ -336,13 +331,11 @@ export default class CPU {
       case types.float.code:
         this.memory.setFloat32(address, value);
         this.setRegisterUInt("sp", address - 4);
-        this.setRegisterUInt("bp", address - 4);
         this.stackFrameSize += 4;
         return;
       case types.double.code:
         this.memory.setFloat64(address, value);
         this.setRegisterUInt("sp", address - 8);
-        this.setRegisterUInt("bp", address - 8);
         this.stackFrameSize += 8;
         return;
       default:
@@ -420,10 +413,7 @@ export default class CPU {
   }
 
   pushState() {
-    // remember where base pointer is so we can move it back
-    // base pointer should point to the top of the arguments/local variables
-    const bp = this.getRegisterUInt("bp");
-
+    const nBytes = this.getRegisterUInt("sp");
     this.push(types.ulong.code, this.getRegisterULong("r1"));
     this.push(types.ulong.code, this.getRegisterULong("r2"));
     this.push(types.ulong.code, this.getRegisterULong("r3"));
@@ -436,7 +426,11 @@ export default class CPU {
     this.push(types.uint.code, this.stackFrameSize + 4);
 
     this.setRegisterUInt("fp", this.getRegisterUInt("sp"));
-    this.setRegisterUInt("bp", bp);
+    this.setRegisterUInt(
+      "sp",
+      this.getRegisterUInt("sp") - this.stackFrameSize + nBytes
+    );
+    this.setRegisterUInt("bp", this.getRegisterUInt("sp") - nBytes);
     this.stackFrameSize = 0;
   }
 
@@ -462,7 +456,6 @@ export default class CPU {
     }
 
     this.setRegisterUInt("fp", fp + stackFrameSize);
-    this.setRegisterUInt("bp", fp + stackFrameSize);
   }
 
   fetchRegisterName() {

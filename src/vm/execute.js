@@ -250,7 +250,13 @@ export default (instruction, cpu) => {
       return;
     }
 
-    case instructions.PSH_LIT.opcode:
+    case instructions.PSH_LIT.opcode: {
+      const type = cpu.fetchUByte();
+      const literal = fetchOnType(type, cpu);
+      cpu.push(type, literal);
+      return;
+    }
+
     case instructions.PSH_REG.opcode:
     case instructions.POP.opcode:
     case instructions.CAL_LIT.opcode:

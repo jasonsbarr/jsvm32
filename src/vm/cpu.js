@@ -25,6 +25,7 @@ export default class CPU {
     this.setRegisterUInt("sp", memory.byteLength - 7 - 1);
     this.setRegisterUInt("fp", memory.byteLength - 7 - 1);
     this.setRegisterUInt("bp", memory.byteLength - 7 - 1);
+    this.callStart = -1;
   }
 
   debug() {

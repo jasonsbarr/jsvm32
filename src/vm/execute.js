@@ -275,6 +275,7 @@ export default (instruction, cpu) => {
 
     case instructions.CAL_LIT.opcode: {
       const address = cpu.fetchUInt();
+      cpu.callStart = address;
       cpu.pushState();
       setOnType(types.uint.code, "ip", address, cpu);
       return;
@@ -282,21 +283,23 @@ export default (instruction, cpu) => {
 
     case instructions.CAL_REG.opcode: {
       const register = cpu.fetchRegisterName();
+      const address = getOnType(types.uint.code, register, cpu);
+      cpu.callStart = address;
       cpu.pushState();
-      setOnType(
-        types.uint.code,
-        "ip",
-        getOnType(types.uint.code, register, cpu), // get address from register
-        cpu
-      );
+      setOnType(types.uint.code, "ip", address, cpu);
       return;
     }
 
     case instructions.TAILCALL.opcode: {
+      // jump back to the start of the function code without
+      // pushing on a new stack frame, assuming all arguments
+      // and local variables have been replaced using bp offsets
+      setOnType(types.uint.code, "ip", cpu.callStart, cpu);
       return;
     }
 
     case instructions.RET.opcode: {
+      cpu.callStart = -1;
       cpu.popState();
       return;
     }

@@ -31,6 +31,36 @@ const metadata = [
     opcode: 0x15,
     name: "jne",
   },
+  {
+    instruction: "PSH_LIT",
+    opcode: 0x17,
+    name: "psh",
+  },
+  {
+    instruction: "PSH_REG",
+    opcode: 0x18,
+    name: "psh",
+  },
+  {
+    instruction: "POP",
+    opcode: 0x1a,
+    name: "pop",
+  },
+  {
+    instruction: "CAL_LIT",
+    opcode: 0x5e,
+    name: "cal",
+  },
+  {
+    instruction: "CAL_REG",
+    opcode: 0x5f,
+    name: "cal",
+  },
+  {
+    instruction: "RET",
+    opcode: 0x60,
+    name: "ret",
+  },
 ];
 
 export default indexBy(metadata, "instruction");

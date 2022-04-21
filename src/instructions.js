@@ -62,8 +62,13 @@ const metadata = [
     name: "cal",
   },
   {
-    instruction: "RET",
+    instruction: "CAL_TAI",
     opcode: 0x60,
+    name: "cal",
+  },
+  {
+    instruction: "RET",
+    opcode: 0x61,
     name: "ret",
   },
 ];

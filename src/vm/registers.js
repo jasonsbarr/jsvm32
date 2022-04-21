@@ -11,4 +11,5 @@ export default [
   "r8",
   "sp",
   "fp",
+  "bp",
 ];

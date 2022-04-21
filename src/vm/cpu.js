@@ -22,6 +22,7 @@ export default class CPU {
       return map;
     }, {});
     this.stackFrameSize = 0;
+    // 7 because need the extra 7 bytes to store a double or long
     this.setRegisterUInt("sp", memory.byteLength - 7 - 1);
     this.setRegisterUInt("fp", memory.byteLength - 7 - 1);
     this.setRegisterUInt("bp", memory.byteLength - 7 - 1);

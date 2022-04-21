@@ -279,6 +279,14 @@ export default class CPU {
     return double;
   }
 
+  push(type, value) {}
+
+  pop(type) {}
+
+  pushState() {}
+
+  popState() {}
+
   execute(instruction) {
     return execute(instruction, this);
   }

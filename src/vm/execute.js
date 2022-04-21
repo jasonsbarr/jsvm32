@@ -251,6 +251,13 @@ export default (instruction, cpu) => {
       return;
     }
 
+    case instructions.PSH_LIT.opcode:
+    case instructions.PSH_REG.opcode:
+    case instructions.POP.opcode:
+    case instructions.CAL_LIT.opcode:
+    case instructions.CAL.REG.opcode:
+    case instructions.RET.opcode:
+
     default:
       throw new Error(
         `Instruction ${instruction.toString(16).padStart(2, "0")} not found`

@@ -64,7 +64,7 @@ const metadata = [
   {
     instruction: "TAILCALL",
     opcode: 0x60,
-    name: "cal",
+    name: "tlc",
   },
   {
     instruction: "RET",

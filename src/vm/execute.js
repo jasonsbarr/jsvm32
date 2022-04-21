@@ -192,7 +192,7 @@ export default (instruction, cpu) => {
     case instructions.MOV_LIT_REG.opcode: {
       const type = cpu.fetchUByte();
       const literal = fetchOnType(type, cpu);
-      const register = registers[cpu.fetchUByte() % registers.length];
+      const register = cpu.fetchRegisterName();
       zeroRegister(register, cpu);
       setOnType(type, register, literal, cpu);
       return;
@@ -200,8 +200,8 @@ export default (instruction, cpu) => {
 
     case instructions.MOV_REG_REG.opcode: {
       const type = cpu.fetchUByte();
-      const regFrom = registers[cpu.fetchUByte() % registers.length];
-      const regTo = registers[cpu.fetchUByte() % registers.length];
+      const regFrom = cpu.fetchRegisterName();
+      const regTo = cpu.fetchRegisterName();
       const value = getOnType(type, regFrom, cpu);
       // first, zero out the value in the register we're moving to
       zeroRegister(regTo, cpu);
@@ -211,7 +211,7 @@ export default (instruction, cpu) => {
 
     case instructions.MOV_REG_MEM.opcode: {
       const type = cpu.fetchUByte();
-      const regFrom = registers[cpu.fetchUByte() % registers.length];
+      const regFrom = cpu.fetchRegisterName();
       const address = cpu.fetchUInt();
       const value = getOnType(type, regFrom, cpu);
       setMemOnType(type, address, value, cpu);
@@ -221,7 +221,7 @@ export default (instruction, cpu) => {
     case instructions.MOV_MEM_REG.opcode: {
       const type = cpu.fetchUByte();
       const address = cpu.fetchUInt();
-      const regTo = registers[cpu.fetchUByte() % registers.length];
+      const regTo = cpu.fetchRegisterName();
       const value = getMemOnType(type, address, cpu);
       zeroRegister(regTo, cpu);
       setOnType(type, regTo, value, cpu);
@@ -230,8 +230,8 @@ export default (instruction, cpu) => {
 
     case instructions.ADD_REG_REG.opcode: {
       const type = cpu.fetchUByte();
-      const r1 = registers[cpu.fetchUByte() % registers.length];
-      const r2 = registers[cpu.fetchUByte() % registers.length];
+      const r1 = cpu.fetchRegisterName();
+      const r2 = cpu.fetchRegisterName();
       const r1Value = getOnType(type, r1, cpu);
       const r2Value = getOnType(type, r2, cpu);
       zeroRegister("acc", cpu);

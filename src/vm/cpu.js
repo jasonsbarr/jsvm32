@@ -410,6 +410,10 @@ export default class CPU {
 
   popState() {}
 
+  fetchRegisterName() {
+    return registerNames[this.fetchUByte() % registerNames.length];
+  }
+
   execute(instruction) {
     return execute(instruction, this);
   }

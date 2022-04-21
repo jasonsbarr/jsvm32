@@ -22,8 +22,8 @@ export default class CPU {
       return map;
     }, {});
     this.stackFrameSize = 0;
-    this.setRegisterUInt("sp", memory.byteLength - 1 - 1);
-    this.setRegisterUInt("fp", memory.byteLength - 1 - 1);
+    this.setRegisterUInt("sp", memory.byteLength - 7 - 1);
+    this.setRegisterUInt("fp", memory.byteLength - 7 - 1);
   }
 
   debug() {
@@ -406,9 +406,45 @@ export default class CPU {
     }
   }
 
-  pushState() {}
+  pushState() {
+    this.push(types.ulong.code, this.getRegisterULong("r1"));
+    this.push(types.ulong.code, this.getRegisterULong("r2"));
+    this.push(types.ulong.code, this.getRegisterULong("r3"));
+    this.push(types.ulong.code, this.getRegisterULong("r4"));
+    this.push(types.ulong.code, this.getRegisterULong("r5"));
+    this.push(types.ulong.code, this.getRegisterULong("r6"));
+    this.push(types.ulong.code, this.getRegisterULong("r7"));
+    this.push(types.ulong.code, this.getRegisterULong("r8"));
+    this.push(types.ulong.code, this.getRegisterULong("ip"));
+    this.push(types.uint.code, this.stackFrameSize + 8);
 
-  popState() {}
+    this.setRegisterUInt("fp", this.getRegisterUInt("sp"));
+    this.stackFrameSize = 0;
+  }
+
+  popState() {
+    const fp = this.getRegisterUInt("fp");
+    this.setRegisterUInt("sp", fp);
+    this.stackFrameSize = this.pop(types.uint.code);
+    const stackFrameSize = this.stackFrameSize;
+
+    this.setRegisterULong("ip", this.pop(types.ulong.code));
+    this.setRegisterULong("r8", this.pop(types.ulong.code));
+    this.setRegisterULong("r7", this.pop(types.ulong.code));
+    this.setRegisterULong("r6", this.pop(types.ulong.code));
+    this.setRegisterULong("r5", this.pop(types.ulong.code));
+    this.setRegisterULong("r4", this.pop(types.ulong.code));
+    this.setRegisterULong("r3", this.pop(types.ulong.code));
+    this.setRegisterULong("r2", this.pop(types.ulong.code));
+    this.setRegisterULong("r1", this.pop(types.ulong.code));
+
+    const nBytes = this.pop(types.uint.code);
+    for (let i = 0; i < nBytes; i++) {
+      this.pop(types.ubyte.code);
+    }
+
+    this.setRegisterUInt("fp", fp + stackFrameSize);
+  }
 
   fetchRegisterName() {
     return registerNames[this.fetchUByte() % registerNames.length];

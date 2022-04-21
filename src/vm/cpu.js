@@ -1,5 +1,6 @@
 import createMemory from "./memory.js";
 import registerNames from "./registers.js";
+import types from "./types.js";
 import execute from "./execute.js";
 
 const registerError = (name) => {
@@ -20,6 +21,9 @@ export default class CPU {
       map[name] = i * 8;
       return map;
     }, {});
+    this.stackFrameSize = 0;
+    this.setRegisterUInt("sp", memory.byteLength - 1 - 1);
+    this.setRegisterUInt("fp", memory.byteLength - 1 - 1);
   }
 
   debug() {

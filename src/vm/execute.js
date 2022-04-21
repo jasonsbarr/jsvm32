@@ -292,6 +292,10 @@ export default (instruction, cpu) => {
       return;
     }
 
+    case instructions.TAILCALL.opcode: {
+      return;
+    }
+
     case instructions.RET.opcode: {
       cpu.popState();
       return;

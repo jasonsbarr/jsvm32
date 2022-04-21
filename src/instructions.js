@@ -62,7 +62,7 @@ const metadata = [
     name: "cal",
   },
   {
-    instruction: "CAL_TAI",
+    instruction: "TAILCALL",
     opcode: 0x60,
     name: "cal",
   },

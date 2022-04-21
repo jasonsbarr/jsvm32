@@ -279,7 +279,63 @@ export default class CPU {
     return double;
   }
 
-  push(type, value) {}
+  push(type, value) {
+    const address = this.getRegisterUInt("sp");
+    switch (type) {
+      case types.ubyte.code:
+        this.memory.setUint8(address, value);
+        this.setRegisterUInt("sp", address - 1);
+        this.stackFrameSize += 1;
+        return;
+      case types.uword.code:
+        this.memory.setUint16(address, value);
+        this.setRegisterUInt("sp", address - 2);
+        this.stackFrameSize += 2;
+        return;
+      case types.uint.code:
+        this.memory.setUint32(address, value);
+        this.setRegisterUInt("sp", address - 4);
+        this.stackFrameSize += 4;
+        return;
+      case types.ulong.code:
+        this.memory.setBigUint64(address, value);
+        this.setRegisterUInt("sp", address - 8);
+        this.stackFrameSize += 8;
+        return;
+      case types.byte.code:
+        this.memory.setInt8(address, value);
+        this.setRegisterUInt("sp", address - 1);
+        this.stackFrameSize += 1;
+        return;
+      case types.word.code:
+        this.memory.setInt16(address, value);
+        this.setRegisterUInt("sp", address - 2);
+        this.stackFrameSize += 2;
+        return;
+      case types.int.code:
+        this.memory.setInt32(address, value);
+        this.setRegisterUInt("sp", address - 4);
+        this.stackFrameSize += 4;
+        return;
+      case types.long.code:
+        this.memory.setBigInt64(address, value);
+        this.setRegisterUInt("sp", address - 8);
+        this.stackFrameSize += 8;
+        return;
+      case types.float.code:
+        this.memory.setFloat32(address, value);
+        this.setRegisterUInt("sp", address - 4);
+        this.stackFrameSize += 4;
+        return;
+      case types.double.code:
+        this.memory.setFloat64(address, value);
+        this.setRegisterUInt("sp", address - 8);
+        this.stackFrameSize += 8;
+        return;
+      default:
+        throw new Error(`Unknown type 0x${type.toString(16).padStart(2, "0")}`);
+    }
+  }
 
   pop(type) {}
 

@@ -257,7 +257,14 @@ export default (instruction, cpu) => {
       return;
     }
 
-    case instructions.PSH_REG.opcode:
+    case instructions.PSH_REG.opcode: {
+      const type = cpu.fetchUByte();
+      const register = cpu.fetchRegisterName();
+      const value = getOnType(type, register, cpu);
+      cpu.push(type, value);
+      return;
+    }
+
     case instructions.POP.opcode:
     case instructions.CAL_LIT.opcode:
     case instructions.CAL.REG.opcode:

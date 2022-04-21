@@ -122,7 +122,7 @@ export default class CPU {
       return registerError(name);
     }
 
-    return this.registers.setBigInt64(this.registerMap[name], value);
+    return this.registers.setBigInt64(this.registerMap[name], BigInt(value));
   }
 
   getRegisterInt(name, offset = 0) {

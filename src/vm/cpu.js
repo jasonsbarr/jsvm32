@@ -342,51 +342,61 @@ export default class CPU {
     let value;
     switch (type) {
       case types.ubyte.code:
+        address += 1;
         value = this.memory.getUint8(address);
         this.setRegisterUInt("sp", address);
         this.stackFrameSize -= 1;
         return value;
       case types.uword.code:
+        address += 2;
         value = this.memory.getUint16(address);
         this.setRegisterUInt("sp", address);
         this.stackFrameSize -= 2;
         return value;
       case types.uint.code:
+        address += 4;
         value = this.memory.getUint32(address);
         this.setRegisterUInt("sp", address);
         this.stackFrameSize -= 4;
         return value;
       case types.ulong.code:
+        address += 8;
         value = this.memory.getBigUint64(address);
         this.setRegisterUInt("sp", address);
         this.stackFrameSize -= 8;
         return value;
       case types.byte.code:
+        address += 1;
         value = this.memory.getInt8(address);
         this.setRegisterUInt("sp", address);
         this.stackFrameSize -= 1;
         return value;
       case types.word.code:
+        address += 2;
         value = this.memory.getInt16(address);
         this.setRegisterUInt("sp", address);
         this.stackFrameSize -= 2;
         return value;
       case types.int.code:
+        address += 4;
         value = this.memory.getInt32(address);
         this.setRegisterUInt("sp", address);
         this.stackFrameSize -= 4;
         return value;
       case types.long.code:
+        address += 8;
         value = this.memory.getBigInt64(address);
         this.setRegisterUInt("sp", address);
         this.stackFrameSize -= 8;
         return value;
       case types.float.code:
+        address += 4;
         value = this.memory.getFloat32(address);
         this.setRegisterUInt("sp", address);
         this.stackFrameSize -= 4;
         return value;
       case types.double.code:
+        address += 8;
         value = this.memory.getFloat64(address);
         this.setRegisterUInt("sp", address);
         this.stackFrameSize -= 8;

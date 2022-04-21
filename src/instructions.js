@@ -2,6 +2,11 @@ import { indexBy } from "./utils.js";
 
 const metadata = [
   {
+    instruction: "HLT",
+    opcode: 0x00,
+    name: "hlt",
+  },
+  {
     instruction: "MOV_LIT_REG",
     opcode: 0x10,
     name: "mov",

@@ -273,9 +273,29 @@ export default (instruction, cpu) => {
       return;
     }
 
-    case instructions.CAL_LIT.opcode:
-    case instructions.CAL.REG.opcode:
-    case instructions.RET.opcode:
+    case instructions.CAL_LIT.opcode: {
+      const address = cpu.fetchUInt();
+      cpu.pushState();
+      setOnType(types.uint.code, "ip", address, cpu);
+      return;
+    }
+
+    case instructions.CAL.REG.opcode: {
+      const register = cpu.fetchRegisterName();
+      cpu.pushState();
+      setOnType(
+        types.uint.code,
+        "ip",
+        getOnType(types.uint.code, register, cpu), // get address from register
+        cpu
+      );
+      return;
+    }
+
+    case instructions.RET.opcode: {
+      cpu.popState();
+      return;
+    }
 
     default:
       throw new Error(

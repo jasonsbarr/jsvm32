@@ -338,7 +338,7 @@ export default class CPU {
   }
 
   pop(type) {
-    let address = this.getRegisterUInt("sp") + 8;
+    let address = this.getRegisterUInt("sp");
     let value;
     switch (type) {
       case types.ubyte.code:

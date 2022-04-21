@@ -1,6 +1,5 @@
 import instructions from "../instructions.js";
 import types from "./types.js";
-import registers from "./registers.js";
 // silence unused declaration error
 // eslint-disable-next-line
 import CPU from "./cpu.js";

@@ -280,7 +280,7 @@ export default (instruction, cpu) => {
       return;
     }
 
-    case instructions.CAL.REG.opcode: {
+    case instructions.CAL_REG.opcode: {
       const register = cpu.fetchRegisterName();
       cpu.pushState();
       setOnType(
